@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  BucketName:
+    Type: String
+
+Resources:
+  GetTranscriptionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: getTranscription.handler
+      Runtime: nodejs14.x
+      Timeout: 30
+      Environment:
+        Variables:
+          BUCKETNAME: !Ref BucketName
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref BucketName
